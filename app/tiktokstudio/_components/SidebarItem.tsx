@@ -1,5 +1,5 @@
 // React
-import React from "react";
+import React, { SVGProps } from "react";
 
 // Next
 import Link from "next/link";
@@ -11,7 +11,7 @@ export default function SidebarItem({
 }: {
   path: string;
   label: string;
-  icon: React.FC;
+  icon: React.FC<SVGProps<SVGSVGElement>>;
 }) {
   return (
     <li className="list-none max-w-fit p-2 my-2">
