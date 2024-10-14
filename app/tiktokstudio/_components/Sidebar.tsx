@@ -6,10 +6,10 @@ import SidebarItem from "./SidebarItem";
 
 export default function Sidebar() {
   return (
-    <div>
+    <div className="bg-white">
       <button>Upload</button>
       <div>
-        <ul>
+        <ul className="">
           {SIDEBAR_LINKS.map((sidebarLink, index) => (
             <SidebarItem
               key={index}

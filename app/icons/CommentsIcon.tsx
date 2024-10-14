@@ -9,7 +9,6 @@ const CommentsIcon = ({
   return (
     <div>
       <svg
-        fill="currentColor"
         viewBox="0 0 48 48"
         xmlns="http://www.w3.org/2000/svg"
         width={width || "1em"}

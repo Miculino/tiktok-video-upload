@@ -9,7 +9,6 @@ const InspirationsIcon = ({
   return (
     <div>
       <svg
-        fill="currentColor"
         color="inherit"
         fontSize="inherit"
         viewBox="0 0 48 48"

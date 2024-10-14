@@ -9,7 +9,6 @@ const FeedbackIcon = ({
   return (
     <div>
       <svg
-        fill="currentColor"
         data-tt="Sidebar_index_IconQA"
         viewBox="0 0 48 48"
         xmlns="http://www.w3.org/2000/svg"
