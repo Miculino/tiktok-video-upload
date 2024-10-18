@@ -1,7 +1,7 @@
 import { cva } from "class-variance-authority";
 import clsx from "clsx";
 
-const button = cva("px-4 py-2 rounded-sm font-medium text-center", {
+const button = cva("px-4 py-3 rounded-sm font-medium text-center", {
   variants: {
     intent: {
       primary: [

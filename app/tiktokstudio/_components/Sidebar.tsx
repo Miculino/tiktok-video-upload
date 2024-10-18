@@ -1,3 +1,5 @@
+"use client";
+
 // Constants
 import { SIDEBAR_LINKS } from "@/app/constants/sidebarLinks";
 
@@ -8,13 +10,13 @@ import Link from "next/link";
 
 export default function Sidebar() {
   return (
-    <div className="bg-white w-full max-w-[240px] py-2 px-3 h-[calc(100vh-62px)] top-0 flex flex-col">
+    <div className="bg-white w-full max-w-[240px] pb-2 px-3 h-[calc(100vh-62px)] top-0 flex flex-col border-r border-r-gray-200">
       <div className="flex flex-col justify-between h-full">
         <div className="py-4 border-b border-b-gray-200">
           <Button>Upload</Button>
         </div>
 
-        <ul className="flex flex-col gap-4 mt-2">
+        <ul className="flex flex-col gap-3 mt-2">
           {SIDEBAR_LINKS.map((sidebarLink, index) => (
             <SidebarItem
               key={index}
