@@ -11,6 +11,10 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --primary: #ea284f;
+    --primary-hover: #d61f43;
+    --secondary: #f2f2f2;
+    --secondary-hover: #e0e0e0;
   }
 }
 
