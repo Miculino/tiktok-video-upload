@@ -3,9 +3,14 @@ import Sidebar from "./_components/Sidebar";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div>
-      <Sidebar />
-      <main>{children}</main>
-    </div>
+    <>
+      <div className="h-[62px] w-full bg-red-200">
+        <p>Navbar</p>
+      </div>
+      <section className="flex">
+        <Sidebar />
+        <main>{children}</main>
+      </section>
+    </>
   );
 }
