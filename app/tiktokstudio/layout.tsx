@@ -1,13 +1,12 @@
 // Components
+import Navbar from "./_components/Navbar";
 import Sidebar from "./_components/Sidebar";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <div className="h-[62px] w-full bg-red-200">
-        <p>Navbar</p>
-      </div>
-      <section className="flex bg-white">
+      <Navbar />
+      <section className="flex bg-gray-100">
         <Sidebar />
         <main>{children}</main>
       </section>
