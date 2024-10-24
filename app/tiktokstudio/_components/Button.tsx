@@ -1,7 +1,7 @@
 import { cva } from "class-variance-authority";
 import clsx from "clsx";
 
-const button = cva("px-4 py-3 rounded-sm font-medium text-center", {
+const button = cva("px-4 py-3 rounded-md font-medium text-center mx-auto", {
   variants: {
     intent: {
       primary: [
@@ -17,10 +17,14 @@ const button = cva("px-4 py-3 rounded-sm font-medium text-center", {
 
 export default function Button({
   intent = "primary",
+  width = "w-full",
   children,
 }: {
   intent?: "primary";
   children: React.ReactNode;
+  width?: string;
 }) {
-  return <div className={clsx(button({ intent }))}>{children}</div>;
+  return (
+    <button className={clsx(button({ intent }), width)}>{children}</button>
+  );
 }

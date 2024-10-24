@@ -1,3 +1,6 @@
+// CLSX
+import clsx from "clsx";
+
 const FileFormatsIcon = ({
   className,
   width,
@@ -5,14 +8,13 @@ const FileFormatsIcon = ({
   ...props
 }: React.SVGProps<SVGSVGElement>) => {
   return (
-    <div>
+    <div className={clsx(className)}>
       <svg
         viewBox="0 0 25 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         width={width || "1em"}
         height={height || "1em"}
-        className={className}
         {...props}
       >
         <path
