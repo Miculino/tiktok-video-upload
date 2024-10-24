@@ -7,12 +7,13 @@ import Card from "./_components/Card";
 import ArrowRightIcon from "../icons/ArrowRightIcon";
 import LatestComments from "./_components/LatestComments";
 import UserStats from "./_components/UserStats";
+import ResourceRecommendation from "./_components/ResourceRecommendation";
 
 export default function Home() {
   return (
     <section className="px-72 py-6 h-full">
-      <div className="flex gap-6">
-        <div className="flex w-full flex-col gap-6">
+      <div className="flex  gap-6">
+        <div className="flex w-2/3 flex-col gap-6">
           <Card className="bg-white flex flex-col gap-6">
             <div className="flex text-black justify-between">
               <div className="flex items-center gap-4">
@@ -39,8 +40,9 @@ export default function Home() {
           </Card>
           <LatestComments />
         </div>
-        <div className="w">
+        <div className="flex flex-col w-1/3 gap-6">
           <UserStats />
+          <ResourceRecommendation />
         </div>
       </div>
     </section>
