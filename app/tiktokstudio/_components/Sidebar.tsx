@@ -10,7 +10,7 @@ import Link from "next/link";
 
 export default function Sidebar() {
   return (
-    <div className="bg-white w-full max-w-[240px] pb-2 px-3 h-[calc(100vh-62px)] top-0 flex flex-col border-r border-r-gray-200">
+    <div className="bg-white w-full max-w-[240px] pb-2 px-3 h-[calc(100vh-62px)] top-[62px] flex flex-col border-r border-r-gray-200 fixed left-0">
       <div className="flex flex-col justify-between h-full">
         <div className="py-4 border-b border-b-gray-200">
           <Link href={"/tiktokstudio/upload"}>

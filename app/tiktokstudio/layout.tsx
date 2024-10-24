@@ -6,9 +6,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <Navbar />
-      <section className="flex bg-gray-100">
+      <section className="flex pt-[62px]">
         <Sidebar />
-        <main className="w-full">{children}</main>
+        <main className="w-[calc(100%-240px)] ml-auto">{children}</main>
       </section>
     </>
   );

@@ -12,8 +12,8 @@ import RecentPosts from "./_components/RecentPosts";
 
 export default function Home() {
   return (
-    <section className="px-72 py-6 h-full">
-      <div className="flex  gap-6">
+    <section className="w-full px-20 py-6 h-full">
+      <div className="flex  gap-6 mx-auto">
         <div className="flex w-2/3 flex-col gap-6">
           <Card className="bg-white flex flex-col gap-6">
             <div className="flex text-black justify-between">
