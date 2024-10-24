@@ -8,7 +8,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <Navbar />
       <section className="flex bg-gray-100">
         <Sidebar />
-        <main>{children}</main>
+        <main className="w-full">{children}</main>
       </section>
     </>
   );
