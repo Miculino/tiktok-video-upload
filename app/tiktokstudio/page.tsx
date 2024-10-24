@@ -8,6 +8,7 @@ import ArrowRightIcon from "../icons/ArrowRightIcon";
 import LatestComments from "./_components/LatestComments";
 import UserStats from "./_components/UserStats";
 import ResourceRecommendation from "./_components/ResourceRecommendation";
+import RecentPosts from "./_components/RecentPosts";
 
 export default function Home() {
   return (
@@ -43,6 +44,7 @@ export default function Home() {
         <div className="flex flex-col w-1/3 gap-6">
           <UserStats />
           <ResourceRecommendation />
+          <RecentPosts />
         </div>
       </div>
     </section>
