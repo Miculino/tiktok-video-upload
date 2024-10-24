@@ -13,7 +13,9 @@ export default function Sidebar() {
     <div className="bg-white w-full max-w-[240px] pb-2 px-3 h-[calc(100vh-62px)] top-0 flex flex-col border-r border-r-gray-200">
       <div className="flex flex-col justify-between h-full">
         <div className="py-4 border-b border-b-gray-200">
-          <Button>Upload</Button>
+          <Link href={"/tiktokstudio/upload"}>
+            <Button>Upload</Button>
+          </Link>
         </div>
 
         <ul className="flex flex-col gap-3 mt-2">
