@@ -1,4 +1,5 @@
 // Components
+import CapcutIcon from "@/app/icons/CapcutIcon";
 import Button from "../../_components/Button";
 import Card from "../../_components/Card";
 
@@ -12,7 +13,10 @@ export default function CapcutAd() {
           AI-powered features.
         </p>
       </div>
-      <Button width="max-w-fit">Try Now</Button>
+      <Button width="max-w-fit" intent="secondary">
+        <CapcutIcon width={20} height={20} />
+        <span>Try Now</span>
+      </Button>
     </Card>
   );
 }

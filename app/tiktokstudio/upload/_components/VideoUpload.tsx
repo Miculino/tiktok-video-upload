@@ -14,7 +14,9 @@ export default function VideoUpload() {
           <h3 className="">Select video to upload</h3>
           <p>Or drag and drop it here</p>
         </div>
-        <Button width="max-w-fit">Select video</Button>
+        <Button className="mx-auto" width="max-w-fit">
+          Select video
+        </Button>
       </Card>
       <div className="flex items-start justify-between mt-6">
         {VIDEO_UPLOAD_REQUIREMENTS.map((videoUploadRequirement, index) => (

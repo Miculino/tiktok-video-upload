@@ -16,6 +16,7 @@ const config: Config = {
         "primary-light": "var(--primary-light)",
         secondary: "var(--secondary)",
         "secondary-hover": "var(--secondary-hover)",
+        disabled: "var(--disabled)",
       },
       boxShadow: {
         tiktok: "-2.5px 0 0 0 #25F4EE, 2.5px 0 0 0 #FE2C55",

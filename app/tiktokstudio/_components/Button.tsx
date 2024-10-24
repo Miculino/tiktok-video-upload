@@ -1,30 +1,41 @@
-import { cva } from "class-variance-authority";
+// React
+import { HTMLProps, ReactNode } from "react";
+
+// CLSX
 import clsx from "clsx";
 
-const button = cva("px-4 py-3 rounded-md font-medium text-center mx-auto", {
-  variants: {
-    intent: {
-      primary: [
-        "bg-primary",
-        "text-white",
-        "hover:bg-primary-hover",
-        "cursor-pointer",
-      ],
-      secondary: ["bg-secondary", "text-black", "hover:bg-secondary-hover"],
+// Class Variance Authority
+import { cva } from "class-variance-authority";
+
+const button = cva(
+  "px-4 py-3 rounded-md font-medium text-center flex items-center justify-center",
+  {
+    variants: {
+      intent: {
+        primary: [
+          "bg-primary",
+          "text-white",
+          "hover:bg-primary-hover",
+          "cursor-pointer",
+        ],
+        secondary: ["bg-secondary", "text-black", "hover:bg-secondary-hover"],
+        disabled: ["bg-disabled text-gray-400 cursor-not-allowed"],
+      },
     },
-  },
-});
+  }
+);
+
+interface ButtonProps extends HTMLProps<HTMLButtonElement> {
+  intent?: "primary" | "secondary" | "disabled";
+  children: ReactNode;
+}
 
 export default function Button({
   intent = "primary",
-  width = "w-full",
   children,
-}: {
-  intent?: "primary";
-  children: React.ReactNode;
-  width?: string;
-}) {
+  className,
+}: ButtonProps) {
   return (
-    <button className={clsx(button({ intent }), width)}>{children}</button>
+    <button className={clsx(button({ intent }), className)}>{children}</button>
   );
 }

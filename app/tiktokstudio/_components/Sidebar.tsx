@@ -1,20 +1,33 @@
 "use client";
 
-// Constants
-import { SIDEBAR_LINKS } from "@/app/constants/sidebarLinks";
+// Next
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 // Components
 import SidebarItem from "./SidebarItem";
 import Button from "./Button";
-import Link from "next/link";
+
+// Constants
+import { SIDEBAR_LINKS } from "@/app/constants/sidebarLinks";
 
 export default function Sidebar() {
+  const pathname = usePathname();
+
+  const isUploadBtnDisabled = pathname === "/tiktokstudio/upload";
+
   return (
     <div className="bg-white w-full max-w-[240px] pb-2 px-3 h-[calc(100vh-62px)] top-[62px] flex flex-col border-r border-r-gray-200 fixed left-0">
       <div className="flex flex-col justify-between h-full">
         <div className="py-4 border-b border-b-gray-200">
           <Link href={"/tiktokstudio/upload"}>
-            <Button>Upload</Button>
+            <Button
+              intent={isUploadBtnDisabled ? "disabled" : "primary"}
+              disabled={isUploadBtnDisabled}
+              className="w-full"
+            >
+              Upload
+            </Button>
           </Link>
         </div>
 
