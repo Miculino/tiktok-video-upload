@@ -1,12 +1,12 @@
 // Components
 import CapcutAd from "./_components/CapcutAd";
-import VideoUpload from "./_components/VideoUpload";
+import UploadStart from "./_components/UploadStart";
 
 export default function Upload() {
   return (
     <section className="px-20 py-6 h-full">
       <div className="flex flex-col gap-6">
-        <VideoUpload />
+        <UploadStart />
         <CapcutAd />
       </div>
     </section>
