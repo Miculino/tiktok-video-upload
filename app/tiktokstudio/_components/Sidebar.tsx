@@ -24,7 +24,7 @@ export default function Sidebar() {
             <Button
               intent={isUploadBtnDisabled ? "disabled" : "primary"}
               disabled={isUploadBtnDisabled}
-              className="w-full"
+              className="w-full py-3"
             >
               Upload
             </Button>

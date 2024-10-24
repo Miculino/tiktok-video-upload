@@ -2,21 +2,21 @@
 import VideoUploadIcon from "@/app/icons/VideoUploadIcon";
 import Button from "../../_components/Button";
 import Card from "../../_components/Card";
-import { VIDEO_UPLOAD_REQUIREMENTS } from "@/app/constants/videoUploadRequirements";
 import VideoRequirement from "./VideoRequirement";
+
+// Constants
+import { VIDEO_UPLOAD_REQUIREMENTS } from "@/app/constants/videoUploadRequirements";
 
 export default function VideoUpload() {
   return (
     <Card className="bg-white">
-      <Card className="bg-gray-200 border border-dashed border-gray-300 p-44 flex flex-col">
+      <Card className="bg-gray-200 border border-dashed border-gray-400 py-40 flex flex-col items-center gap-4">
+        <VideoUploadIcon width={64} height={64} />
         <div className="text-black flex flex-col items-center">
-          <VideoUploadIcon width={64} height={64} />
-          <h3 className="">Select video to upload</h3>
-          <p>Or drag and drop it here</p>
+          <h3 className="text-2xl font-semibold">Select video to upload</h3>
+          <p className="text-sm">Or drag and drop it here</p>
         </div>
-        <Button className="mx-auto" width="max-w-fit">
-          Select video
-        </Button>
+        <Button className="mx-auto py-2 px-12">Select video</Button>
       </Card>
       <div className="flex items-start justify-between mt-6">
         {VIDEO_UPLOAD_REQUIREMENTS.map((videoUploadRequirement, index) => (
