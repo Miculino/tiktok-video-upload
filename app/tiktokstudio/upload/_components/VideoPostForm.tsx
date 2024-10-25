@@ -44,18 +44,18 @@ const selectStyles: StylesConfig<OptionType, false> = {
       : undefined,
     color: "#000",
   }),
-  control: (provided: CSSObjectWithLabel, state) => ({
+  control: (provided: CSSObjectWithLabel) => ({
     ...provided,
     minWidth: "fit-content",
     maxWidth: "200px",
   }),
-  menu: (provided: CSSObjectWithLabel, state) => ({
+  menu: (provided: CSSObjectWithLabel) => ({
     ...provided,
     minWidth: "fit-content",
     maxWidth: "200px",
     padding: "10px",
   }),
-  singleValue: (provided: CSSObjectWithLabel, state) => ({
+  singleValue: (provided: CSSObjectWithLabel) => ({
     ...provided,
     border: "none",
   }),

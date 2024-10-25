@@ -21,7 +21,9 @@ import { useState } from "react";
 export default function VideoUpload() {
   const [uppy] = useState(() => new Uppy());
 
-  // const [results, clearResults] = useUppyEvent(uppy, "file-added");
+  const [results] = useUppyEvent(uppy, "file-added");
+
+  console.log(results);
 
   return (
     <Card className="bg-gray-200 border border-dashed border-gray-400 py-40 flex flex-col items-center gap-4 relative">

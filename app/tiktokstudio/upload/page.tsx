@@ -8,8 +8,8 @@ export default function Upload() {
     <section className="px-20 py-6 h-full">
       <div className="flex flex-col gap-6">
         <UploadStart />
-        {/* <VideoPostForm /> */}
-        {/* <CapcutAd /> */}
+        <VideoPostForm />
+        <CapcutAd />
       </div>
     </section>
   );
