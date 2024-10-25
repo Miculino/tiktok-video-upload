@@ -6,6 +6,8 @@ import Image from "next/image";
 // Components
 import Button from "../../_components/Button";
 import Card from "../../_components/Card";
+import FormField from "./FormField";
+import TextareaField from "./TextareaField";
 
 // React Hook Form
 import { useForm, Controller } from "react-hook-form";
@@ -21,8 +23,8 @@ import Select, { CSSObjectWithLabel, StylesConfig } from "react-select";
 
 // Form Schema
 const formSchema = zod.object({
-  description: zod.string(),
-  privacy: zod.enum(["everyone", "friends", "only-you"]).optional(),
+  description: zod.string().max(4000, "Maximum limit of 4000 reached"),
+  privacy: zod.enum(["everyone", "friends", "only-you"]),
 });
 
 type OptionType = {
@@ -68,7 +70,7 @@ const options = [
 ];
 
 export default function VideoPostForm() {
-  const { register, handleSubmit, control } = useForm<FormData>({
+  const { register, handleSubmit, control, watch } = useForm<FormData>({
     defaultValues: {
       description: "",
       privacy: "everyone",
@@ -85,15 +87,13 @@ export default function VideoPostForm() {
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* Video Description */}
         <div className="p-6 flex flex-col gap-6">
-          <div className="flex flex-col gap-2">
-            <label className="text-base font-medium text-black">
-              Description
-            </label>
-            <textarea
-              {...register("description")}
-              className="bg-gray-200 w-full resize-none focus:outline-none text-black p-4 rounded-lg"
-            ></textarea>
-          </div>
+          <FormField label="Description">
+            <TextareaField
+              fieldName="description"
+              register={register}
+              watch={watch}
+            />
+          </FormField>
           {/* Video Thumbnail */}
           <div className="flex flex-col gap-2">
             <label className="text-base font-medium text-black">Cover</label>
