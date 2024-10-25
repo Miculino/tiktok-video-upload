@@ -6,4 +6,5 @@ interface VideoUploadState {
 
 export const useVideoUploadStore = create<VideoUploadState>((set) => ({
   video_file: [],
+  test: set({}),
 }));
