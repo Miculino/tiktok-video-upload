@@ -31,3 +31,8 @@ body {
     text-wrap: balance;
   }
 }
+
+.uppy-Root,
+.uppy-Container {
+  height: 100%;
+}
