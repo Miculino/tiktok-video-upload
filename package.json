@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
+    "@uppy/react": "^4.0.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "next": "14.2.15",
@@ -17,6 +18,7 @@
     "react-dom": "^18",
     "react-hook-form": "^7.53.1",
     "react-select": "^5.8.1",
+    "uppy": "^4.5.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {

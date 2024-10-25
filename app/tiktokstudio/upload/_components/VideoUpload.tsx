@@ -2,6 +2,9 @@
 import Button from "../../_components/Button";
 import Card from "../../_components/Card";
 
+// Uppy
+import { Uppy, Dashboard } from "uppy";
+
 // Icons
 import VideoUploadIcon from "@/app/icons/VideoUploadIcon";
 
