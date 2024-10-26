@@ -1,8 +1,14 @@
 "use client";
 
+// React
+import { useEffect, useState } from "react";
+
 // Components
 import Button from "../../_components/Button";
 import Card from "../../_components/Card";
+
+// Zustand
+import { useVideoUploadStore } from "@/app/stores/videoUploadStore";
 
 // Uppy
 import { Uppy } from "uppy";
@@ -16,14 +22,17 @@ import { DragDrop, useUppyEvent } from "@uppy/react";
 
 // Icons
 import VideoUploadIcon from "@/app/icons/VideoUploadIcon";
-import { useState } from "react";
 
 export default function VideoUpload() {
   const [uppy] = useState(() => new Uppy());
 
-  const [results] = useUppyEvent(uppy, "file-added");
+  const { addVideoFile } = useVideoUploadStore();
 
-  console.log(results);
+  const [files] = useUppyEvent(uppy, "file-added");
+
+  useEffect(() => {
+    addVideoFile(files[0]);
+  }, [files]);
 
   return (
     <Card className="bg-gray-200 border border-dashed border-gray-400 py-40 flex flex-col items-center gap-4 relative">
