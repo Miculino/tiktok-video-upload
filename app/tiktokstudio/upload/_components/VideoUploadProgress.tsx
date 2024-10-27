@@ -15,6 +15,9 @@ import Card from "../../_components/Card";
 // Hooks
 import useVideoDuration from "@/app/hooks/useVideoDuration";
 
+// Utils
+import { calculateETA } from "@/app/utils/calculateETA";
+
 // Zustand
 import { useVideoUploadStore } from "@/app/stores/videoUploadStore";
 
@@ -24,8 +27,11 @@ import clsx from "clsx";
 // Icons
 import VideoUploadIcon from "@/app/icons/VideoUploadIcon";
 import ReplaceIcon from "@/app/icons/ReplaceIcon";
+import CheckmarkIcon from "@/app/icons/CheckmarkIcon";
 
 export default function VideoUploadProgress() {
+  const [uploadStartTime, setUploadStartTime] = useState(Date.now());
+
   const [uppy] = useState(() =>
     new Uppy({
       debug: true,
@@ -46,6 +52,12 @@ export default function VideoUploadProgress() {
   );
 
   const [uploadProgress] = useUppyEvent(uppy, "upload-progress");
+  const [uploadSuccessEvent] = useUppyEvent(uppy, "upload-success");
+
+  const isUploadCompletedSuccessfully =
+    uploadSuccessEvent.length > 0
+      ? uploadSuccessEvent[1]?.status === 200
+      : false;
 
   const { video_file } = useVideoUploadStore();
 
@@ -110,16 +122,29 @@ export default function VideoUploadProgress() {
         <div className="flex w-full">
           <div className="flex justify-between w-full">
             <div className="flex items-center gap-1 text-gray-600 text-sm">
-              <VideoUploadIcon width={20} height={20} />
-              <p>
-                <span>
-                  {!isNaN(+megabytesUploaded) ? megabytesUploaded : "0.00"} MB
-                </span>
-                /<span>{totalVideoFileSize} MB</span> uploaded...
-              </p>
-              <p>
-                <span>5 minutes</span> left
-              </p>
+              {isUploadCompletedSuccessfully ? (
+                <>
+                  <CheckmarkIcon />
+                  <p className="text-green-500 font-medium">Uploaded</p>
+                </>
+              ) : (
+                <>
+                  <VideoUploadIcon width={20} height={20} />
+                  <p>
+                    <span>
+                      {!isNaN(+megabytesUploaded) ? megabytesUploaded : "0.00"}{" "}
+                      MB
+                    </span>
+                    /<span>{totalVideoFileSize} MB</span> uploaded...
+                  </p>
+                  <p>
+                    <span>
+                      {calculateETA(bytesUploaded, bytesTotal, uploadStartTime)}
+                    </span>{" "}
+                    left
+                  </p>
+                </>
+              )}
             </div>
           </div>
           <div>
@@ -136,9 +161,7 @@ export default function VideoUploadProgress() {
           <div
             className={clsx(
               "h-1 transition-all duration-75",
-              uploadProgressPercentage !== "100.00"
-                ? "bg-blue-400"
-                : "bg-green-400"
+              isUploadCompletedSuccessfully ? "bg-green-400" : "bg-blue-400"
             )}
             style={{
               width: `${
