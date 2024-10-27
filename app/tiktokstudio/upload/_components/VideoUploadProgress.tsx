@@ -173,6 +173,11 @@ export default function VideoUploadProgress() {
                   <CheckmarkIcon width={20} height={20} />
                   <p className="text-green-500 font-medium">Uploaded</p>
                 </>
+              ) : isVideoUploadPaused ? (
+                <>
+                  <PauseIcon />
+                  <p>Upload paused</p>
+                </>
               ) : (
                 <>
                   <VideoUploadIcon width={20} height={20} />
