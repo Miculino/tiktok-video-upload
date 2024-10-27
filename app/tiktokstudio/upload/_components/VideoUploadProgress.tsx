@@ -1,19 +1,52 @@
 // React
-import { useRef, useMemo } from "react";
+import { useRef, useMemo, useEffect, useState } from "react";
+
+// Uppy
+import { Uppy } from "uppy";
+import { useUppyEvent } from "@uppy/react";
+
+// Transloadit
+import Transloadit from "@uppy/transloadit";
 
 // Components
 import Button from "../../_components/Button";
 import Card from "../../_components/Card";
 
+// Hooks
+import useVideoDuration from "@/app/hooks/useVideoDuration";
+
 // Zustand
 import { useVideoUploadStore } from "@/app/stores/videoUploadStore";
+
+// CLSX
+import clsx from "clsx";
 
 // Icons
 import VideoUploadIcon from "@/app/icons/VideoUploadIcon";
 import ReplaceIcon from "@/app/icons/ReplaceIcon";
-import useVideoDuration from "@/app/hooks/useVideoDuration";
 
 export default function VideoUploadProgress() {
+  const [uppy] = useState(() =>
+    new Uppy({
+      debug: true,
+      restrictions: {
+        allowedFileTypes: [".mp4"],
+        maxNumberOfFiles: 1,
+      },
+    }).use(Transloadit, {
+      assemblyOptions: {
+        params: {
+          auth: {
+            key: "ee7341c972a4831b3c2414505f36bf11",
+          },
+          template_id: "02e33ea1aba14ef592a8999c05666243",
+        },
+      },
+    })
+  );
+
+  const [uploadProgress] = useUppyEvent(uppy, "upload-progress");
+
   const { video_file } = useVideoUploadStore();
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -22,13 +55,34 @@ export default function VideoUploadProgress() {
     () => video_file?.data && URL.createObjectURL(video_file.data),
     [video_file?.data]
   );
-  const totalVideoFileSize = ((video_file?.size ?? 0) / 1000000).toFixed(2);
 
   const [seconds, minutes] = useVideoDuration(videoRef, videoFileURL);
 
+  const totalVideoFileSize = ((video_file?.size ?? 0) / 1000000).toFixed(2);
+
+  const bytesUploaded = uploadProgress[1]?.bytesUploaded ?? 0;
+  const bytesTotal = uploadProgress[1]?.bytesTotal ?? 0;
+  const megabytesUploaded = (bytesUploaded / 1000000).toFixed(2);
+
+  const uploadProgressPercentage = ((bytesUploaded / bytesTotal) * 100).toFixed(
+    2
+  );
+
+  useEffect(() => {
+    if (video_file) {
+      uppy.addFile(video_file.data as File);
+      uppy.upload();
+    }
+  }, [video_file]);
+
   return (
     <Card className="bg-white flex flex-col gap-4 relative">
-      <video ref={videoRef} src={videoFileURL} controls></video>
+      <video
+        className="hidden opacity-0 invisible absolute -z-[9999px] w-0 h-0"
+        ref={videoRef}
+        src={videoFileURL}
+        controls
+      ></video>
       <div className="flex items-center justify-between">
         <p className="text-2xl font-medium text-black">{video_file?.name}</p>
         <Button className="py-1 px-4 gap-2" intent="secondary">
@@ -58,8 +112,10 @@ export default function VideoUploadProgress() {
             <div className="flex items-center gap-1 text-gray-600 text-sm">
               <VideoUploadIcon width={20} height={20} />
               <p>
-                <span>527 MB</span>/<span>{totalVideoFileSize} MB</span>{" "}
-                uploaded...
+                <span>
+                  {!isNaN(+megabytesUploaded) ? megabytesUploaded : "0.00"} MB
+                </span>
+                /<span>{totalVideoFileSize} MB</span> uploaded...
               </p>
               <p>
                 <span>5 minutes</span> left
@@ -67,12 +123,29 @@ export default function VideoUploadProgress() {
             </div>
           </div>
           <div>
-            <span className="text-lg text-black font-medium">37.86%</span>
+            <span className="text-lg text-black font-medium">
+              {!isNaN(+uploadProgressPercentage)
+                ? uploadProgressPercentage
+                : "0.00"}
+              %
+            </span>
           </div>
         </div>
 
         <div className="absolute bottom-0 left-0 w-full rounded-b-lg overflow-hidden">
-          <div className="w-1/2 bg-blue-400 h-1"></div>
+          <div
+            className={clsx(
+              "h-1 transition-all duration-75",
+              uploadProgressPercentage !== "100.00"
+                ? "bg-blue-400"
+                : "bg-green-400"
+            )}
+            style={{
+              width: `${
+                !isNaN(+uploadProgressPercentage) ? uploadProgressPercentage : 0
+              }%`,
+            }}
+          ></div>
         </div>
       </div>
     </Card>
