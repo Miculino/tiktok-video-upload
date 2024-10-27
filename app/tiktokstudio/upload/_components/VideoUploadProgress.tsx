@@ -59,7 +59,7 @@ export default function VideoUploadProgress() {
       ? uploadSuccessEvent[1]?.status === 200
       : false;
 
-  const { video_file } = useVideoUploadStore();
+  const { video_file, resetVideoFile } = useVideoUploadStore();
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
@@ -80,12 +80,19 @@ export default function VideoUploadProgress() {
     2
   );
 
+  const handleReplaceFile = () => {
+    uppy.cancelAll();
+    resetVideoFile();
+  };
+
   useEffect(() => {
     if (video_file) {
       uppy.addFile(video_file.data as File);
       uppy.upload();
     }
   }, [video_file]);
+
+  // console.log(video_file);
 
   return (
     <Card className="bg-white flex flex-col gap-4 relative">
@@ -97,7 +104,11 @@ export default function VideoUploadProgress() {
       ></video>
       <div className="flex items-center justify-between">
         <p className="text-2xl font-medium text-black">{video_file?.name}</p>
-        <Button className="py-1 px-4 gap-2" intent="secondary">
+        <Button
+          onClick={handleReplaceFile}
+          className="py-1 px-4 gap-2"
+          intent="secondary"
+        >
           <ReplaceIcon />
           <span>Replace</span>
         </Button>

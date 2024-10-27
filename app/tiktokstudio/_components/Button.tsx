@@ -28,14 +28,18 @@ const button = cva(
 interface ButtonProps extends HTMLProps<HTMLButtonElement> {
   intent?: "primary" | "secondary" | "disabled";
   children: ReactNode;
+  type?: "button" | "submit" | "reset";
 }
 
 export default function Button({
   intent = "primary",
   children,
   className,
+  ...props
 }: ButtonProps) {
   return (
-    <button className={clsx(button({ intent }), className)}>{children}</button>
+    <button {...props} className={clsx(button({ intent }), className)}>
+      {children}
+    </button>
   );
 }
