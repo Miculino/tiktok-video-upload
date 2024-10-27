@@ -3,7 +3,7 @@ import { useRef, useMemo, useEffect, useState } from "react";
 
 // Uppy
 import { Uppy } from "uppy";
-import { useUppyEvent } from "@uppy/react";
+import { useUppyEvent, useUppyState } from "@uppy/react";
 
 // Transloadit
 import Transloadit from "@uppy/transloadit";
@@ -28,6 +28,7 @@ import clsx from "clsx";
 import VideoUploadIcon from "@/app/icons/VideoUploadIcon";
 import ReplaceIcon from "@/app/icons/ReplaceIcon";
 import CheckmarkIcon from "@/app/icons/CheckmarkIcon";
+import PauseIcon from "@/app/icons/PauseIcon";
 
 export default function VideoUploadProgress() {
   const [uploadStartTime] = useState(Date.now());
@@ -51,6 +52,8 @@ export default function VideoUploadProgress() {
     })
   );
 
+  const uppyStateFiles = useUppyState(uppy, (state) => state.files);
+
   const [uploadProgress] = useUppyEvent(uppy, "upload-progress");
   const [uploadSuccessEvent] = useUppyEvent(uppy, "upload-success");
 
@@ -68,6 +71,13 @@ export default function VideoUploadProgress() {
     [video_file?.data]
   );
 
+  const fileID = video_file?.id;
+
+  const isVideoUploadPaused =
+    fileID && Object.keys(uppyStateFiles).length > 0
+      ? uppyStateFiles[fileID].isPaused
+      : false;
+
   const [seconds, minutes] = useVideoDuration(videoRef, videoFileURL);
 
   const totalVideoFileSize = ((video_file?.size ?? 0) / 1000000).toFixed(2);
@@ -79,10 +89,17 @@ export default function VideoUploadProgress() {
   const uploadProgressPercentage = ((bytesUploaded / bytesTotal) * 100).toFixed(
     2
   );
+  const uploadETA = calculateETA(bytesUploaded, bytesTotal, uploadStartTime);
 
   const handleReplaceFile = () => {
     uppy.cancelAll();
     resetVideoFile();
+  };
+
+  const handleUploadPause = () => {
+    if (fileID) {
+      uppy.pauseResume(fileID);
+    }
   };
 
   useEffect(() => {
@@ -91,8 +108,6 @@ export default function VideoUploadProgress() {
       uppy.upload();
     }
   }, [video_file]);
-
-  // console.log(video_file);
 
   return (
     <Card className="bg-white flex flex-col gap-4 relative">
@@ -104,14 +119,34 @@ export default function VideoUploadProgress() {
       ></video>
       <div className="flex items-center justify-between">
         <p className="text-2xl font-medium text-black">{video_file?.name}</p>
-        <Button
-          onClick={handleReplaceFile}
-          className="py-1 px-4 gap-2"
-          intent="secondary"
-        >
-          <ReplaceIcon />
-          <span>Replace</span>
-        </Button>
+        {isUploadCompletedSuccessfully ? (
+          <Button
+            onClick={handleReplaceFile}
+            className="py-1 px-4 gap-2"
+            intent="secondary"
+          >
+            <ReplaceIcon />
+            <span>Replace</span>
+          </Button>
+        ) : (
+          <Button
+            onClick={handleUploadPause}
+            className="py-1 px-4 gap-2"
+            intent="secondary"
+          >
+            {isVideoUploadPaused ? (
+              <>
+                <ReplaceIcon />
+                <span>Resume Upload</span>
+              </>
+            ) : (
+              <>
+                <PauseIcon />
+                <span>Pause Upload</span>
+              </>
+            )}
+          </Button>
+        )}
       </div>
 
       <div className="flex items-center gap-6">
@@ -149,10 +184,7 @@ export default function VideoUploadProgress() {
                     /<span>{totalVideoFileSize} MB</span> uploaded...
                   </p>
                   <p>
-                    <span>
-                      {calculateETA(bytesUploaded, bytesTotal, uploadStartTime)}
-                    </span>{" "}
-                    left
+                    <span>{uploadETA}</span> left
                   </p>
                 </>
               )}
