@@ -30,7 +30,7 @@ import ReplaceIcon from "@/app/icons/ReplaceIcon";
 import CheckmarkIcon from "@/app/icons/CheckmarkIcon";
 
 export default function VideoUploadProgress() {
-  const [uploadStartTime, setUploadStartTime] = useState(Date.now());
+  const [uploadStartTime] = useState(Date.now());
 
   const [uppy] = useState(() =>
     new Uppy({
