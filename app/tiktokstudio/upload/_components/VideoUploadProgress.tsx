@@ -41,12 +41,14 @@ export default function VideoUploadProgress() {
         maxNumberOfFiles: 1,
       },
     }).use(Transloadit, {
+      waitForEncoding: true,
+      waitForMetadata: false,
       assemblyOptions: {
         params: {
           auth: {
             key: "ee7341c972a4831b3c2414505f36bf11",
           },
-          template_id: "02e33ea1aba14ef592a8999c05666243",
+          template_id: "792fa7fcfa774fc3ba4f0c0c4db64279",
         },
       },
     })
@@ -56,6 +58,11 @@ export default function VideoUploadProgress() {
 
   const [uploadProgress] = useUppyEvent(uppy, "upload-progress");
   const [uploadSuccessEvent] = useUppyEvent(uppy, "upload-success");
+
+  // Add S3 URL to DB
+  useUppyEvent(uppy, "transloadit:complete", (assembly) => {
+    console.log("Assembly completed:", assembly);
+  });
 
   const isUploadCompletedSuccessfully =
     uploadSuccessEvent.length > 0
@@ -105,7 +112,7 @@ export default function VideoUploadProgress() {
   useEffect(() => {
     if (video_file) {
       uppy.addFile(video_file.data as File);
-      uppy.upload();
+      uppy.upload().then((res) => console.log(res, "response"));
     }
   }, [video_file]);
 
