@@ -24,6 +24,7 @@ import { DragDrop, useUppyEvent } from "@uppy/react";
 import VideoUploadIcon from "@/app/icons/VideoUploadIcon";
 
 export default function VideoUpload() {
+  // Configure Uppy to receive only video uploads
   const [uppy] = useState(() => new Uppy());
 
   const { addVideoFile } = useVideoUploadStore();
