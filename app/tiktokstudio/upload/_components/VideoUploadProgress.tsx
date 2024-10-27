@@ -124,7 +124,7 @@ export default function VideoUploadProgress() {
             <div className="flex items-center gap-1 text-gray-600 text-sm">
               {isUploadCompletedSuccessfully ? (
                 <>
-                  <CheckmarkIcon />
+                  <CheckmarkIcon width={20} height={20} />
                   <p className="text-green-500 font-medium">Uploaded</p>
                 </>
               ) : (
