@@ -2,9 +2,11 @@
 
 // Components
 import CapcutAd from "./_components/CapcutAd";
+import PreviewModeSelector from "./_components/PreviewModeSelector";
 import UploadStart from "./_components/UploadStart";
 import VideoPostForm from "./_components/VideoPostForm";
 import VideoUploadProgress from "./_components/VideoUploadProgress";
+import Card from "../_components/Card";
 
 // Zustand
 import { useVideoUploadStore } from "@/app/stores/videoUploadStore";
@@ -18,7 +20,10 @@ export default function Upload() {
         {video_file ? (
           <>
             <VideoUploadProgress />
-            <VideoPostForm />
+            <Card className="flex bg-white px-0 py-0">
+              <VideoPostForm />
+              <PreviewModeSelector />
+            </Card>
           </>
         ) : (
           <>

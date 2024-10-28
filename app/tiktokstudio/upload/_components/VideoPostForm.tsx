@@ -5,12 +5,11 @@ import Image from "next/image";
 
 // Components
 import Button from "../../_components/Button";
-import Card from "../../_components/Card";
+
 import FormField from "./FormField";
 import TextareaField from "./TextareaField";
 
 // Zustand
-// import { useVideoUploadStore } from "@/app/stores/videoUploadStore";
 
 // React Hook Form
 import { useForm, Controller } from "react-hook-form";
@@ -73,8 +72,6 @@ const options = [
 ];
 
 export default function VideoPostForm() {
-  // const { video_file } = useVideoUploadStore();
-
   const { register, handleSubmit, control, watch } = useForm<FormData>({
     defaultValues: {
       description: "",
@@ -88,7 +85,7 @@ export default function VideoPostForm() {
   };
 
   return (
-    <Card className="bg-white px-0 py-0">
+    <div className="w-full">
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* Video Description */}
         <div className="p-6 flex flex-col gap-6">
@@ -174,6 +171,6 @@ export default function VideoPostForm() {
           </div>
         </div>
       </form>
-    </Card>
+    </div>
   );
 }
