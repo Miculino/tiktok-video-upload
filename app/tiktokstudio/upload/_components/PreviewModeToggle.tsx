@@ -21,9 +21,9 @@ export default function PreviewModeToggle() {
   };
 
   return (
-    <div className="flex p-1 rounded-lg bg-gray-200 items-center">
+    <div className="flex p-1 rounded-lg bg-gray-200 items-center justify-between text-center">
       {PREVIEW_MODES.map((preview_mode, index) => (
-        <label key={index} htmlFor={preview_mode.value}>
+        <label className="w-full" key={index} htmlFor={preview_mode.value}>
           <div
             className={clsx(
               "py-1 px-4 rounded-sm cursor-pointer transition-all duration-150",

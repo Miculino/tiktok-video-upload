@@ -8,6 +8,12 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        "camera-lens":
+          "linear-gradient(325.01deg, rgb(156, 160, 197) -9.8%, rgba(156, 160, 197, 0) 63.24%)",
+        "disc-gradient":
+          "conic-gradient(from 90deg at 50% 50%, rgb(57, 57, 57) -40.11deg, rgb(21, 21, 21) 47.27deg, rgb(57, 57, 57) 143.02deg, rgb(22, 22, 22) 227.49deg, rgb(57, 57, 57) 319.89deg, rgb(21, 21, 21) 407.27deg)",
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
