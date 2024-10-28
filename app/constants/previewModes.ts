@@ -1,14 +1,14 @@
 export const PREVIEW_MODES = [
   {
     label: "Feed",
-    value: "feed-view",
+    value: "feed",
   },
   {
     label: "Profile",
-    value: "profile-view",
+    value: "profile",
   },
   {
     label: "Web/TV",
-    value: "web-view",
+    value: "web",
   },
 ];
