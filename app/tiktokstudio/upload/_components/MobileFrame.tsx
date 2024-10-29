@@ -1,8 +1,5 @@
 // React
-import { useEffect, useRef, ReactNode } from "react";
-
-// Zustand
-import { useVideoUploadStore } from "@/app/stores/videoUploadStore";
+import { ReactNode } from "react";
 
 // CLSX
 import clsx from "clsx";
@@ -14,20 +11,6 @@ export default function MobileFrame({
   children: ReactNode;
   className?: string;
 }) {
-  const { video_file } = useVideoUploadStore();
-
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    if (video_file) {
-      const videoURL = URL.createObjectURL(video_file.data);
-
-      if (videoRef && videoRef.current) {
-        videoRef.current.src = videoURL;
-      }
-    }
-  }, [video_file]);
-
   return (
     <div
       className={clsx(

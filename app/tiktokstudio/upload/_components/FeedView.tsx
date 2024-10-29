@@ -1,6 +1,3 @@
-// React
-import { useEffect, useRef } from "react";
-
 // Next
 import Image from "next/image";
 
@@ -18,19 +15,7 @@ import ShareIcon from "@/app/icons/ShareIcon";
 import OriginalSoundIcon from "@/app/icons/OriginalSoundIcon";
 
 export default function FeedView() {
-  const { video_file } = useVideoUploadStore();
-
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    if (video_file) {
-      const videoURL = URL.createObjectURL(video_file.data);
-
-      if (videoRef && videoRef.current) {
-        videoRef.current.src = videoURL;
-      }
-    }
-  }, [video_file]);
+  const { video_url } = useVideoUploadStore();
 
   return (
     <>
@@ -89,7 +74,7 @@ export default function FeedView() {
       <div className="h-full">
         <div className="absolute top-1/2 -translate-y-1/2 grid place-content-center h-full">
           <video
-            ref={videoRef}
+            src={video_url}
             controls={false}
             className="h-full w-full object-cover"
           />

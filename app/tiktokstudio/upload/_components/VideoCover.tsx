@@ -1,7 +1,18 @@
 // Next
 import Image from "next/image";
 
+// Zustand
+import { useVideoUploadStore } from "@/app/stores/videoUploadStore";
+import { useEffect } from "react";
+
 export default function VideoCover() {
+  const { video_url } = useVideoUploadStore();
+
+  useEffect(() => {
+    if (video_url) {
+    }
+  }, [video_url]);
+
   return (
     <div className="flex flex-col gap-2">
       <label className="text-base font-medium text-black">Cover</label>

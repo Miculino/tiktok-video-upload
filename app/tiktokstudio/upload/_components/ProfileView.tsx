@@ -1,6 +1,3 @@
-// React
-import { useRef, useEffect } from "react";
-
 // Next
 import Image from "next/image";
 
@@ -16,19 +13,7 @@ import ShuffleIcon from "@/app/icons/ShuffleIcon";
 import PrivateHeartIcon from "@/app/icons/PrivateHeartIcon";
 
 export default function ProfileView() {
-  const { video_file } = useVideoUploadStore();
-
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    if (video_file) {
-      const videoURL = URL.createObjectURL(video_file.data);
-
-      if (videoRef && videoRef.current) {
-        videoRef.current.src = videoURL;
-      }
-    }
-  }, [video_file]);
+  const { video_url } = useVideoUploadStore();
 
   return (
     <div className="p-4">
@@ -72,7 +57,7 @@ export default function ProfileView() {
         <div className="overflow-hidden">
           <video
             className="w-full h-full aspect-video object-cover -mt-1"
-            ref={videoRef}
+            src={video_url}
           />
         </div>
 
