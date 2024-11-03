@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@aws-sdk/client-lambda": "^3.682.0",
     "@ffmpeg/ffmpeg": "^0.12.10",
     "@hookform/resolvers": "^3.9.0",
     "@uppy/progress-bar": "^4.0.0",
