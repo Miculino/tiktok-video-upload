@@ -11,13 +11,13 @@ import { generateTimelineFrames } from "@/app/lib/aws/lambda/functions";
 import { useVideoUploadStore } from "@/app/stores/videoUploadStore";
 
 export default function VideoCover() {
-  const { video_file } = useVideoUploadStore();
+  const { s3_video_url } = useVideoUploadStore();
 
   useEffect(() => {
-    if (video_file?.data) {
-      generateTimelineFrames(video_file);
+    if (s3_video_url) {
+      generateTimelineFrames(s3_video_url);
     }
-  }, [video_file]);
+  }, [s3_video_url]);
 
   return (
     <div className="flex flex-col gap-2">
