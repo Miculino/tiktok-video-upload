@@ -13,7 +13,7 @@ import ShuffleIcon from "@/app/icons/ShuffleIcon";
 import PrivateHeartIcon from "@/app/icons/PrivateHeartIcon";
 
 export default function ProfileView() {
-  const { video_url } = useVideoUploadStore();
+  const { blob_video_url } = useVideoUploadStore();
 
   return (
     <div className="p-4">
@@ -57,7 +57,7 @@ export default function ProfileView() {
         <div className="overflow-hidden">
           <video
             className="w-full h-full aspect-video object-cover -mt-1"
-            src={video_url}
+            src={blob_video_url}
           />
         </div>
 

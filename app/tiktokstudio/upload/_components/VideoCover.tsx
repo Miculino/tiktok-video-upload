@@ -1,15 +1,24 @@
 "use client";
 
 // React
-// import { useState } from "react";
+import { useEffect } from "react";
 
 // Next
 import Image from "next/image";
+import { generateTimelineFrames } from "@/app/lib/aws/lambda/functions";
 
 // Zustand
-// import { useVideoUploadStore } from "@/app/stores/videoUploadStore";
+import { useVideoUploadStore } from "@/app/stores/videoUploadStore";
 
 export default function VideoCover() {
+  const { video_file } = useVideoUploadStore();
+
+  useEffect(() => {
+    if (video_file?.data) {
+      generateTimelineFrames(video_file);
+    }
+  }, [video_file]);
+
   return (
     <div className="flex flex-col gap-2">
       <label className="text-base font-medium text-black">Cover</label>

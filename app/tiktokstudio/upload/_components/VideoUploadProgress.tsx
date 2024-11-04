@@ -59,17 +59,12 @@ export default function VideoUploadProgress() {
   const [uploadProgress] = useUppyEvent(uppy, "upload-progress");
   const [uploadSuccessEvent] = useUppyEvent(uppy, "upload-success");
 
-  // Add S3 URL to DB
-  useUppyEvent(uppy, "transloadit:complete", (assembly) => {
-    console.log("Assembly completed:", assembly);
-  });
-
   const isUploadCompletedSuccessfully =
     uploadSuccessEvent.length > 0
       ? uploadSuccessEvent[1]?.status === 200
       : false;
 
-  const { video_file, resetVideoFile } = useVideoUploadStore();
+  const { video_file, resetVideoFile, addS3VideoURL } = useVideoUploadStore();
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
@@ -109,12 +104,20 @@ export default function VideoUploadProgress() {
     }
   };
 
+  useUppyEvent(uppy, "transloadit:complete", (assembly) => {
+    const videoFileS3URL = assembly.results[":original"][0].url;
+
+    if (videoFileS3URL) {
+      addS3VideoURL(videoFileS3URL);
+    }
+  });
+
   useEffect(() => {
     if (video_file) {
       uppy.addFile(video_file.data as File);
       uppy.upload().then((res) => console.log(res, "response"));
     }
-  }, [video_file]);
+  }, [video_file, uppy]);
 
   return (
     <Card className="bg-white flex flex-col gap-4 relative">

@@ -40,7 +40,7 @@ export default function VideoUpload() {
 
   useEffect(() => {
     addVideoFile(files[0]);
-  }, [files]);
+  }, [files, addVideoFile]);
 
   return (
     <Card className="bg-gray-200 border border-dashed border-gray-400 py-40 flex flex-col items-center gap-4 relative">
