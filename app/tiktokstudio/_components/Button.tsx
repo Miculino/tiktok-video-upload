@@ -8,7 +8,7 @@ import clsx from "clsx";
 import { cva } from "class-variance-authority";
 
 const button = cva(
-  "rounded-md font-medium text-center flex items-center justify-center",
+  "rounded-md font-medium text-center flex items-center justify-center gap-2",
   {
     variants: {
       intent: {

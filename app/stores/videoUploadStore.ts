@@ -8,15 +8,18 @@ interface VideoUploadState {
   blob_video_url: string | undefined;
   video_file: DefaultUppyFile;
   s3_video_url: string | undefined;
+  isVideoModalToggled: boolean;
   addVideoFile: (video_file: DefaultUppyFile) => void;
   addS3VideoURL: (s3_video_url: string) => void;
   resetVideoFile: () => void;
+  toggleVideoModal: () => void;
 }
 
 export const useVideoUploadStore = create<VideoUploadState>((set) => ({
   blob_video_url: undefined,
   video_file: undefined,
   s3_video_url: undefined,
+  isVideoModalToggled: false,
   addVideoFile: (video_file: DefaultUppyFile) =>
     set({
       video_file,
@@ -26,4 +29,6 @@ export const useVideoUploadStore = create<VideoUploadState>((set) => ({
     }),
   addS3VideoURL: (s3_video_url) => set({ s3_video_url }),
   resetVideoFile: () => set({ video_file: undefined }),
+  toggleVideoModal: () =>
+    set((state) => ({ isVideoModalToggled: !state.isVideoModalToggled })),
 }));

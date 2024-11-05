@@ -7,6 +7,7 @@ import UploadStart from "./_components/UploadStart";
 import VideoPostForm from "./_components/VideoPostForm";
 import VideoUploadProgress from "./_components/VideoUploadProgress";
 import Card from "../_components/Card";
+import VideoEditModal from "./_components/VideoEditModal";
 
 // Zustand
 import { useVideoUploadStore } from "@/app/stores/videoUploadStore";
@@ -32,6 +33,7 @@ export default function Upload() {
           </>
         )}
       </div>
+      <VideoEditModal />
     </section>
   );
 }
