@@ -8,7 +8,6 @@ const PlusIcon: React.FC<PlusIconProps> = ({
   className,
   width,
   height,
-  pathFill = "var(--foreground)",
   ...props
 }) => {
   return (

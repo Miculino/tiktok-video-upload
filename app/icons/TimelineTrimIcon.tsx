@@ -8,7 +8,6 @@ const TimelineTrimIcon: React.FC<TimelineTrimIconProps> = ({
   className,
   width,
   height,
-  pathFill = "var(--foreground)",
   ...props
 }) => {
   return (

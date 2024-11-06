@@ -7,8 +7,6 @@ const PlayIcon: React.FC<PlayIconProps> = ({
   className,
   width,
   height,
-  pathFill = "var(--foreground)",
-  strokeFill = "var(--foreground)",
   ...props
 }) => {
   return (

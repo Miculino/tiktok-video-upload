@@ -8,7 +8,6 @@ const RedoIcon: React.FC<RedoIconProps> = ({
   className,
   width,
   height,
-  pathFill = "var(--foreground)",
   ...props
 }) => {
   return (

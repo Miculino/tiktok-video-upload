@@ -8,7 +8,6 @@ const MinusIcon: React.FC<MinusIconProps> = ({
   className,
   width,
   height,
-  pathFill = "var(--foreground)",
   ...props
 }) => {
   return (

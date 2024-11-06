@@ -8,7 +8,6 @@ const UndoIcon: React.FC<UndoIconProps> = ({
   className,
   width,
   height,
-  pathFill = "var(--foreground)",
   ...props
 }) => {
   return (

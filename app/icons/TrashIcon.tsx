@@ -8,7 +8,6 @@ const TrashIcon: React.FC<TrashIconProps> = ({
   className,
   width,
   height,
-  pathFill = "var(--foreground)",
   ...props
 }) => {
   return (
