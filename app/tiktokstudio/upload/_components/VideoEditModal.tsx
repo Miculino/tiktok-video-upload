@@ -166,7 +166,7 @@ export default function VideoEditModal() {
             </div>
           </div>
           <div className="">
-            <div className="flex flex-col overflow-x-scroll relative max-w-[1792px] p-6 scrollbar-hide">
+            <div className="flex flex-col gap-4 overflow-x-scroll relative max-w-[1792px] p-6 scrollbar-hide">
               <TimelineRuler />
               <div className="mt-6 flex w-full overflow-hidden rounded-md">
                 {videoTimelineFrames.length > 0 &&
@@ -181,7 +181,10 @@ export default function VideoEditModal() {
                     />
                   ))}
               </div>
-              <div>Add sound</div>
+              <div className="bg-gray-100 p-3 px-6 rounded-md flex gap-2 text-black items-center">
+                <OriginalSoundIcon width={18} height={18} />
+                <p className="font-medium">Add sound</p>
+              </div>
             </div>
           </div>
 
