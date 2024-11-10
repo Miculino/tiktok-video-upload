@@ -23,6 +23,7 @@
     "react-dom": "^18",
     "react-hook-form": "^7.53.1",
     "react-select": "^5.8.1",
+    "tailwind-scrollbar-hide": "^1.1.7",
     "uppy": "^4.5.0",
     "zod": "^3.23.8",
     "zustand": "^5.0.0"

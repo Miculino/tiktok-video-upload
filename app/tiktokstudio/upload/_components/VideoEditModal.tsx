@@ -165,10 +165,10 @@ export default function VideoEditModal() {
               <PlusIcon />
             </div>
           </div>
-          <div className="p-6 pt-0">
-            <div className="flex flex-col overflow-x-scroll relative max-w-[1792px]">
+          <div className="">
+            <div className="flex flex-col overflow-x-scroll relative max-w-[1792px] p-6 scrollbar-hide">
               <TimelineRuler />
-              <div className="mt-12 flex w-full overflow-hidden rounded-md">
+              <div className="mt-6 flex w-full overflow-hidden rounded-md">
                 {videoTimelineFrames.length > 0 &&
                   videoTimelineFrames.map((frame, index) => (
                     <Image
