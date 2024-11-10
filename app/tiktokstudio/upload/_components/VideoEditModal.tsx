@@ -24,8 +24,7 @@ import RedoIcon from "@/app/icons/RedoIcon";
 import TimelineTrimIcon from "@/app/icons/TimelineTrimIcon";
 import TrashIcon from "@/app/icons/TrashIcon";
 import PlayIcon from "@/app/icons/PlayIcon";
-import MinusIcon from "@/app/icons/MinusIcon";
-import PlusIcon from "@/app/icons/PlusIcon";
+import TimelineZoom from "./TimelineZoom";
 
 export default function VideoEditModal() {
   const [videoTimelineFrames, setVideoTimelineFrames] = useState<string[]>([]);
@@ -155,18 +154,12 @@ export default function VideoEditModal() {
                 <span className="text-gray-400">00:00:10</span>
               </p>
             </div>
-            <div className="flex items-center gap-2">
-              <MinusIcon />
-              <div className="w-32 h-4">
-                <input type="range" min={1} max={3} step={1} />
-              </div>
-              <PlusIcon />
-            </div>
+            <TimelineZoom />
           </div>
           <div className="">
             <div className="flex flex-col gap-4 overflow-x-scroll relative max-w-[1792px] p-6 scrollbar-hide">
               <TimelineRuler />
-              <div className="mt-6 flex w-full overflow-hidden rounded-md">
+              <div className="mt-6 flex">
                 {videoTimelineFrames.length > 0 &&
                   videoTimelineFrames.map((frame, index) => (
                     <Image
@@ -179,7 +172,7 @@ export default function VideoEditModal() {
                     />
                   ))}
               </div>
-              <div className="bg-gray-100 p-3 px-6 rounded-md flex gap-2 text-black items-center cursor-pointer hover:bg-gray-200/90 transition-all duration-300">
+              <div className="bg-gray-100 p-3 px-6 rounded-md flex w-[1792px] gap-2 text-black items-center cursor-pointer hover:bg-gray-200/90 transition-all duration-300">
                 <OriginalSoundIcon width={18} height={18} />
                 <p className="font-medium">Add sound</p>
               </div>
