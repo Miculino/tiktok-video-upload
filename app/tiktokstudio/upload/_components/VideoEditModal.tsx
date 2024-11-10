@@ -181,7 +181,7 @@ export default function VideoEditModal() {
                     />
                   ))}
               </div>
-              <div className="bg-gray-100 p-3 px-6 rounded-md flex gap-2 text-black items-center">
+              <div className="bg-gray-100 p-3 px-6 rounded-md flex gap-2 text-black items-center cursor-pointer hover:bg-gray-200/90 transition-all duration-300">
                 <OriginalSoundIcon width={18} height={18} />
                 <p className="font-medium">Add sound</p>
               </div>
