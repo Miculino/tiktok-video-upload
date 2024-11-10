@@ -8,8 +8,6 @@ interface LambdaCommandParams {
 }
 
 export async function generateTimelineFrames(s3_video_url: string) {
-  console.log(s3_video_url);
-
   const params: LambdaCommandParams = {
     FunctionName: "generateTimelineFrames",
     InvocationType: "RequestResponse",
@@ -22,8 +20,6 @@ export async function generateTimelineFrames(s3_video_url: string) {
     const res = await lambdaClient.send(command);
 
     const parsedData = JSON.parse(res.Payload?.transformToString() ?? "");
-
-    console.log(parsedData);
 
     return parsedData.body;
   } catch (err) {

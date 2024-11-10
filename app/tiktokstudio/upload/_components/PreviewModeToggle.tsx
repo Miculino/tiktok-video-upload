@@ -14,7 +14,6 @@ export default function PreviewModeToggle() {
   const { switchPreviewMode, previewMode } = usePreviewModeStore();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(e.currentTarget.id);
     if (e.currentTarget.id) {
       switchPreviewMode(e.currentTarget.id as "feed" | "profile" | "web");
     }

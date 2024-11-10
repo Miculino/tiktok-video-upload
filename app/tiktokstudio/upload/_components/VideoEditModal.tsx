@@ -1,6 +1,3 @@
-// React
-import { useEffect, useState } from "react";
-
 // Next
 import Image from "next/image";
 
@@ -11,6 +8,9 @@ import Button from "../../_components/Button";
 import SongPreview from "./SongPreview";
 import SearchInput from "@/app/components/SearchInput";
 import TimelineRuler from "./TimelineRuler";
+
+// Hooks
+import useFetchStreamingFrames from "@/app/hooks/useFetchStreamingFrames";
 
 // Zustand
 import { useVideoUploadStore } from "@/app/stores/videoUploadStore";
@@ -27,73 +27,22 @@ import PlayIcon from "@/app/icons/PlayIcon";
 import TimelineZoom from "./TimelineZoom";
 
 export default function VideoEditModal() {
-  const [videoTimelineFrames, setVideoTimelineFrames] = useState<string[]>([]);
-
   const { blob_video_url, s3_video_url } = useVideoUploadStore();
 
-  const { isVideoModalToggled, toggleVideoModal } = useVideoEditorStore();
+  const { isVideoModalToggled, toggleVideoModal, timelineZoomLevel } =
+    useVideoEditorStore();
+
+  const videoTimelineFrames = useFetchStreamingFrames(
+    s3_video_url,
+    isVideoModalToggled,
+    timelineZoomLevel
+  );
 
   const handleToggleVideoModal = () => {
     toggleVideoModal();
   };
 
-  useEffect(() => {
-    const fetchTimelineFrames = async () => {
-      const res = await fetch("http://localhost:3333/generate-frames");
-
-      if (res.body) {
-        const reader = res.body.getReader();
-        let buffer = new Uint8Array();
-
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-
-          // Append new data to the buffer
-          const newBuffer = new Uint8Array(buffer.length + value.length);
-          newBuffer.set(buffer);
-          newBuffer.set(value, buffer.length);
-          buffer = newBuffer;
-
-          // Look for frame boundary markers
-          let frameMatch;
-
-          // Loop through buffer looking for frame boundaries
-          while (
-            (frameMatch =
-              /--frame\r\nContent-Type: image\/jpeg\r\nContent-Length: (\d+)\r\n\r\n/.exec(
-                new TextDecoder().decode(buffer)
-              )) !== null
-          ) {
-            const headerLength = frameMatch.index + frameMatch[0].length;
-            const contentLength = parseInt(frameMatch[1]);
-
-            // Check if we have a full frame (header + content + boundary)
-            if (buffer.length >= headerLength + contentLength + 2) {
-              const imageData = buffer.slice(
-                headerLength,
-                headerLength + contentLength
-              );
-              const blob = new Blob([imageData], { type: "image/jpeg" });
-              const blobUrl = URL.createObjectURL(blob);
-
-              // Add the frame URL to the timeline frames state
-              setVideoTimelineFrames((prevFrames) => [...prevFrames, blobUrl]);
-
-              // Remove processed data from buffer and continue looking for next frame
-              buffer = buffer.slice(headerLength + contentLength + 2);
-            } else {
-              break; // Exit the inner loop if the frame isn't fully received yet
-            }
-          }
-        }
-      }
-    };
-
-    if (isVideoModalToggled && s3_video_url) {
-      fetchTimelineFrames();
-    }
-  }, [s3_video_url, isVideoModalToggled, setVideoTimelineFrames]);
+  const incrementFactor = timelineZoomLevel / 7;
 
   if (isVideoModalToggled)
     return (
@@ -172,7 +121,12 @@ export default function VideoEditModal() {
                     />
                   ))}
               </div>
-              <div className="bg-gray-100 p-3 px-6 rounded-md flex w-[1792px] gap-2 text-black items-center cursor-pointer hover:bg-gray-200/90 transition-all duration-300">
+              <div
+                style={{
+                  width: `${896 * incrementFactor}px`,
+                }}
+                className="bg-gray-100 p-3 px-6 rounded-md flex  gap-2 text-black items-center cursor-pointer hover:bg-gray-200/90 transition-all duration-300"
+              >
                 <OriginalSoundIcon width={18} height={18} />
                 <p className="font-medium">Add sound</p>
               </div>

@@ -1,16 +1,24 @@
 // React
 import { FormEvent } from "react";
 
+// Zustand
+import { useVideoEditorStore } from "@/app/stores/videoEditorStore";
+
 // Icons
 import MinusIcon from "@/app/icons/MinusIcon";
 import PlusIcon from "@/app/icons/PlusIcon";
 
 export default function TimelineZoom() {
-  const handleTimelineZoom = (e: FormEvent<HTMLInputElement>) => {
-    // Make a new request to generate frames based on the updated frame count
-    const frameCount = e.currentTarget.value;
+  const { setTimelineZoomLevel } = useVideoEditorStore();
 
-    console.log(frameCount);
+  const handleTimelineZoom = (e: FormEvent<HTMLInputElement>) => {
+    // Default timeline zoom is always 14
+    const timelineZoomLevel = Number(e.currentTarget.value) ?? 14;
+
+    // Update zoomLevel dependency to trigger a new request to generate frames based on the updated frame count
+    if (timelineZoomLevel) {
+      setTimelineZoomLevel(timelineZoomLevel as 7 | 14 | 21);
+    }
   };
 
   return (
