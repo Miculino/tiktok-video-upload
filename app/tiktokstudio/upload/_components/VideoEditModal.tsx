@@ -14,6 +14,7 @@ import TimelineRuler from "./TimelineRuler";
 
 // Zustand
 import { useVideoUploadStore } from "@/app/stores/videoUploadStore";
+import { useVideoEditorStore } from "@/app/stores/videoEditorStore";
 
 // Icons
 import OriginalSoundIcon from "@/app/icons/OriginalSoundIcon";
@@ -29,12 +30,9 @@ import PlusIcon from "@/app/icons/PlusIcon";
 export default function VideoEditModal() {
   const [videoTimelineFrames, setVideoTimelineFrames] = useState<string[]>([]);
 
-  const {
-    isVideoModalToggled,
-    toggleVideoModal,
-    blob_video_url,
-    s3_video_url,
-  } = useVideoUploadStore();
+  const { blob_video_url, s3_video_url } = useVideoUploadStore();
+
+  const { isVideoModalToggled, toggleVideoModal } = useVideoEditorStore();
 
   const handleToggleVideoModal = () => {
     toggleVideoModal();

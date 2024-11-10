@@ -5,13 +5,13 @@ import PreviewModeToggle from "./PreviewModeToggle";
 import VideoPreview from "./VideoPreview";
 
 // Zustand
-import { useVideoUploadStore } from "@/app/stores/videoUploadStore";
+import { useVideoEditorStore } from "@/app/stores/videoEditorStore";
 
 // Icons
 import ScissorsIcon from "@/app/icons/ScissorsIcon";
 
 export default function PreviewModeSelector() {
-  const { toggleVideoModal } = useVideoUploadStore();
+  const { toggleVideoModal } = useVideoEditorStore();
 
   const handleVideoModalToggle = () => {
     toggleVideoModal();
