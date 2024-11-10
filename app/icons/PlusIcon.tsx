@@ -13,7 +13,7 @@ const PlusIcon: React.FC<PlusIconProps> = ({
   return (
     <div className={className}>
       <svg
-        font-size="14"
+        fontSize="14"
         viewBox="0 0 48 48"
         xmlns="http://www.w3.org/2000/svg"
         width={width || "1em"}

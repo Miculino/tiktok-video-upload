@@ -1,9 +1,16 @@
+// React
+import { useEffect, useState } from "react";
+
+// Next
+import Image from "next/image";
+
 // Components
 import Modal from "@/app/components/Modal";
 import Card from "../../_components/Card";
 import Button from "../../_components/Button";
 import SongPreview from "./SongPreview";
 import SearchInput from "@/app/components/SearchInput";
+import TimelineRuler from "./TimelineRuler";
 
 // Zustand
 import { useVideoUploadStore } from "@/app/stores/videoUploadStore";
@@ -20,17 +27,81 @@ import MinusIcon from "@/app/icons/MinusIcon";
 import PlusIcon from "@/app/icons/PlusIcon";
 
 export default function VideoEditModal() {
-  const { isVideoModalToggled, toggleVideoModal, blob_video_url } =
-    useVideoUploadStore();
+  const [videoTimelineFrames, setVideoTimelineFrames] = useState<string[]>([]);
+
+  const {
+    isVideoModalToggled,
+    toggleVideoModal,
+    blob_video_url,
+    s3_video_url,
+  } = useVideoUploadStore();
 
   const handleToggleVideoModal = () => {
     toggleVideoModal();
   };
 
+  useEffect(() => {
+    const fetchTimelineFrames = async () => {
+      const res = await fetch("http://localhost:3333/generate-frames");
+
+      if (res.body) {
+        const reader = res.body.getReader();
+        let buffer = new Uint8Array();
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          // Append new data to the buffer
+          const newBuffer = new Uint8Array(buffer.length + value.length);
+          newBuffer.set(buffer);
+          newBuffer.set(value, buffer.length);
+          buffer = newBuffer;
+
+          // Look for frame boundary markers
+          let frameMatch;
+
+          // Loop through buffer looking for frame boundaries
+          while (
+            (frameMatch =
+              /--frame\r\nContent-Type: image\/jpeg\r\nContent-Length: (\d+)\r\n\r\n/.exec(
+                new TextDecoder().decode(buffer)
+              )) !== null
+          ) {
+            const headerLength = frameMatch.index + frameMatch[0].length;
+            const contentLength = parseInt(frameMatch[1]);
+
+            // Check if we have a full frame (header + content + boundary)
+            if (buffer.length >= headerLength + contentLength + 2) {
+              const imageData = buffer.slice(
+                headerLength,
+                headerLength + contentLength
+              );
+              const blob = new Blob([imageData], { type: "image/jpeg" });
+              const blobUrl = URL.createObjectURL(blob);
+
+              // Add the frame URL to the timeline frames state
+              setVideoTimelineFrames((prevFrames) => [...prevFrames, blobUrl]);
+
+              // Remove processed data from buffer and continue looking for next frame
+              buffer = buffer.slice(headerLength + contentLength + 2);
+            } else {
+              break; // Exit the inner loop if the frame isn't fully received yet
+            }
+          }
+        }
+      }
+    };
+
+    if (isVideoModalToggled && s3_video_url) {
+      fetchTimelineFrames();
+    }
+  }, [s3_video_url, isVideoModalToggled, setVideoTimelineFrames]);
+
   if (isVideoModalToggled)
     return (
       <Modal>
-        <Card className="bg-white px-0 py-0">
+        <Card className="bg-white px-0 py-0 max-w-[896px]">
           <div className="border-b border-b-gray-200 py-4 px-6">
             <p className="text-xl text-black font-semibold">Edit video</p>
           </div>
@@ -87,7 +158,6 @@ export default function VideoEditModal() {
               </p>
             </div>
             <div className="flex items-center gap-2">
-              {/* Timeline */}
               <MinusIcon />
               <div className="w-32 h-4">
                 <input type="range" min={1} max={3} step={1} />
@@ -95,7 +165,26 @@ export default function VideoEditModal() {
               <PlusIcon />
             </div>
           </div>
-          <div>Timeline View</div>
+          <div className="p-6 pt-0">
+            <div className="flex flex-col overflow-x-scroll relative max-w-[1792px]">
+              <TimelineRuler />
+              <div className="mt-12 flex w-full overflow-hidden rounded-md">
+                {videoTimelineFrames.length > 0 &&
+                  videoTimelineFrames.map((frame, index) => (
+                    <Image
+                      className="w-[calc(896px/7)]"
+                      key={index}
+                      src={frame}
+                      width={100}
+                      height={100}
+                      alt=""
+                    />
+                  ))}
+              </div>
+              <div>Add sound</div>
+            </div>
+          </div>
+
           <div className="flex items-center gap-2 p-6 justify-end">
             <Button
               className="py-2 px-4"

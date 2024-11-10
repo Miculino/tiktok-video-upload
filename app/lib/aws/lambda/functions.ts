@@ -19,10 +19,13 @@ export async function generateTimelineFrames(s3_video_url: string) {
   const command = new InvokeCommand(params);
 
   try {
-    const data = await lambdaClient.send(command);
+    const res = await lambdaClient.send(command);
 
-    console.log(data);
-    console.log(JSON.parse(data.Payload?.transformToString() ?? ""));
+    const parsedData = JSON.parse(res.Payload?.transformToString() ?? "");
+
+    console.log(parsedData);
+
+    return parsedData.body;
   } catch (err) {
     console.error(err);
   }
