@@ -7,6 +7,7 @@ import formatTime from "@/app/utils/formatTime";
 export default function TimelineRuler() {
   const { timelineZoomLevel } = useVideoEditorStore();
 
+  // This is probably an arbitrary range of values (7,14,21) they picked for the original TikTok studio video editor modal
   const incrementFactor = timelineZoomLevel / 7;
 
   return (

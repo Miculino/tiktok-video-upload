@@ -25,6 +25,7 @@ import TimelineTrimIcon from "@/app/icons/TimelineTrimIcon";
 import TrashIcon from "@/app/icons/TrashIcon";
 import PlayIcon from "@/app/icons/PlayIcon";
 import TimelineZoom from "./TimelineZoom";
+import VerticalPlayhead from "./vertical-playhead/VerticalPlayhead";
 
 export default function VideoEditModal() {
   const { blob_video_url, s3_video_url } = useVideoUploadStore();
@@ -130,6 +131,7 @@ export default function VideoEditModal() {
                 <OriginalSoundIcon width={18} height={18} />
                 <p className="font-medium">Add sound</p>
               </div>
+              <VerticalPlayhead />
             </div>
           </div>
 
