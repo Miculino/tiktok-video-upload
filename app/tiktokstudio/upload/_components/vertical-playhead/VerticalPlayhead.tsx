@@ -4,26 +4,36 @@ import { useRef, useState, useEffect } from "react";
 // Styles
 import styles from "./vertical-playhead.module.scss";
 
+// Zustand
+import { useVideoEditorStore } from "@/app/stores/videoEditorStore";
+
 // CLSX
 import clsx from "clsx";
 
 export default function VerticalPlayhead() {
   const [isMovable, setIsMovable] = useState<boolean>(false);
-  const [position, setPosition] = useState<number>(0);
 
   const verticalPlayheadRef = useRef<HTMLDivElement>(null);
+
+  const { setCursorPosition, cursorPosition } = useVideoEditorStore();
 
   useEffect(() => {
     const handleGlobalMouseMove = (e: MouseEvent) => {
       if (isMovable) {
-        setPosition((prev) => {
-          const newPos = prev + e.movementX;
-          const container = verticalPlayheadRef.current?.parentElement;
-          if (!container) return prev;
-          const bounds = container.getBoundingClientRect();
-          console.log(bounds);
-          return Math.max(0, Math.min(newPos, bounds.width));
-        });
+        const newCursorPos = cursorPosition + e.movementX;
+        const timelineContainer = verticalPlayheadRef.current?.parentElement;
+
+        if (!timelineContainer) return;
+
+        const timelineContainerBounds =
+          timelineContainer.getBoundingClientRect();
+
+        const calculatedNewCursorPosition = Math.max(
+          0,
+          Math.min(newCursorPos, timelineContainerBounds.width)
+        );
+
+        setCursorPosition(calculatedNewCursorPosition);
       }
     };
 
@@ -40,15 +50,15 @@ export default function VerticalPlayhead() {
       window.removeEventListener("mousemove", handleGlobalMouseMove);
       window.removeEventListener("mouseup", handleGlobalMouseUp);
     };
-  }, [isMovable]);
+  }, [isMovable, setCursorPosition, cursorPosition]);
 
   return (
     <div
       ref={verticalPlayheadRef}
       onMouseDown={() => setIsMovable(true)}
-      className={clsx(styles.verticalPlayhead)}
+      className={clsx(styles.verticalPlayhead, "cursor-pointer")}
       style={{
-        transform: `translateX(${position}px)`,
+        transform: `translateX(${cursorPosition}px)`,
         position: "absolute",
         top: 0,
         bottom: 0,

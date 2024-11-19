@@ -1,3 +1,6 @@
+// React
+import { useEffect, useRef } from "react";
+
 // Next
 import Image from "next/image";
 
@@ -18,7 +21,10 @@ import OriginalSoundIcon from "@/app/icons/OriginalSoundIcon";
 export default function Timeline() {
   const { s3_video_url } = useVideoUploadStore();
 
-  const { isVideoModalToggled, timelineZoomLevel } = useVideoEditorStore();
+  const { isVideoModalToggled, timelineZoomLevel, cursorPosition } =
+    useVideoEditorStore();
+
+  const timelineRef = useRef<HTMLDivElement>(null);
 
   const videoTimelineFrames = useFetchStreamingFrames(
     s3_video_url,
@@ -28,8 +34,32 @@ export default function Timeline() {
 
   const incrementFactor = timelineZoomLevel / 7;
 
+  useEffect(() => {
+    if (timelineRef && timelineRef.current) {
+      const { clientWidth: timelineClientWidth } = timelineRef.current;
+
+      const cursorRelativePosition =
+        cursorPosition - timelineRef.current.scrollLeft;
+
+      const distanceFromLeftEdge = cursorRelativePosition;
+      const distanceFromRightEdge =
+        timelineClientWidth - cursorRelativePosition - 48;
+
+      if (distanceFromRightEdge <= 10) {
+        timelineRef.current.scrollLeft += 100;
+      }
+
+      if (distanceFromLeftEdge <= -10) {
+        timelineRef.current.scrollLeft -= 100;
+      }
+    }
+  }, [cursorPosition]);
+
   return (
-    <div className="overflow-x-scroll relative p-6 scrollbar-hide select-none">
+    <div
+      ref={timelineRef}
+      className="overflow-x-scroll relative p-6 scrollbar-hide select-none scroll-smooth"
+    >
       <div
         className="flex flex-col gap-4"
         style={{
