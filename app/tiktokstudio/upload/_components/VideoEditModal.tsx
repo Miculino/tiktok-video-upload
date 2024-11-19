@@ -1,16 +1,11 @@
-// Next
-import Image from "next/image";
-
 // Components
 import Modal from "@/app/components/Modal";
 import Card from "../../_components/Card";
 import Button from "../../_components/Button";
 import SongPreview from "./SongPreview";
 import SearchInput from "@/app/components/SearchInput";
-import TimelineRuler from "./TimelineRuler";
-
-// Hooks
-import useFetchStreamingFrames from "@/app/hooks/useFetchStreamingFrames";
+import TimelineZoom from "./TimelineZoom";
+import Timeline from "./Timeline";
 
 // Zustand
 import { useVideoUploadStore } from "@/app/stores/videoUploadStore";
@@ -24,26 +19,15 @@ import RedoIcon from "@/app/icons/RedoIcon";
 import TimelineTrimIcon from "@/app/icons/TimelineTrimIcon";
 import TrashIcon from "@/app/icons/TrashIcon";
 import PlayIcon from "@/app/icons/PlayIcon";
-import TimelineZoom from "./TimelineZoom";
-import VerticalPlayhead from "./vertical-playhead/VerticalPlayhead";
 
 export default function VideoEditModal() {
-  const { blob_video_url, s3_video_url } = useVideoUploadStore();
+  const { blob_video_url } = useVideoUploadStore();
 
-  const { isVideoModalToggled, toggleVideoModal, timelineZoomLevel } =
-    useVideoEditorStore();
-
-  const videoTimelineFrames = useFetchStreamingFrames(
-    s3_video_url,
-    isVideoModalToggled,
-    timelineZoomLevel
-  );
+  const { isVideoModalToggled, toggleVideoModal } = useVideoEditorStore();
 
   const handleToggleVideoModal = () => {
     toggleVideoModal();
   };
-
-  const incrementFactor = timelineZoomLevel / 7;
 
   if (isVideoModalToggled)
     return (
@@ -106,39 +90,7 @@ export default function VideoEditModal() {
             </div>
             <TimelineZoom />
           </div>
-          <div className="overflow-x-scroll relative p-6 scrollbar-hide select-none">
-            <div
-              className="flex flex-col gap-4"
-              style={{
-                width: `${896 * incrementFactor}px`,
-              }}
-            >
-              <TimelineRuler />
-              <div className="mt-6 flex">
-                {videoTimelineFrames.length > 0 &&
-                  videoTimelineFrames.map((frame, index) => (
-                    <Image
-                      className="w-[calc(896px/7)]"
-                      key={index}
-                      src={frame}
-                      width={100}
-                      height={100}
-                      alt=""
-                    />
-                  ))}
-              </div>
-              <div
-                style={{
-                  width: `${896 * incrementFactor}px`,
-                }}
-                className="bg-gray-100 p-3 px-6 rounded-md flex  gap-2 text-black items-center cursor-pointer hover:bg-gray-200/90 transition-all duration-300"
-              >
-                <OriginalSoundIcon width={18} height={18} />
-                <p className="font-medium">Add sound</p>
-              </div>
-              <VerticalPlayhead />
-            </div>
-          </div>
+          <Timeline />
 
           <div className="flex items-center gap-2 p-6 justify-end">
             <Button
