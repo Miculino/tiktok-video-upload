@@ -106,8 +106,13 @@ export default function VideoEditModal() {
             </div>
             <TimelineZoom />
           </div>
-          <div className="">
-            <div className="flex flex-col gap-4 overflow-x-scroll relative max-w-[1792px] p-6 scrollbar-hide">
+          <div className="overflow-x-scroll relative p-6 scrollbar-hide select-none">
+            <div
+              className="flex flex-col gap-4"
+              style={{
+                width: `${896 * incrementFactor}px`,
+              }}
+            >
               <TimelineRuler />
               <div className="mt-6 flex">
                 {videoTimelineFrames.length > 0 &&
